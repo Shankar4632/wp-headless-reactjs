@@ -18,19 +18,16 @@ const AddPost = () => {
   const handlesubmitpost = (e) => {
     e.preventDefault();
     const { token } = JSON.parse(user);
+    const data = {
+      ...post,
+      status: "publish",
+    };
     axios
-      .post(
-        `${process.env.REACT_APP_API_ROOT}/posts`,
-        {
-          title: post.title,
-          content: post.content,
+      .post(`${process.env.REACT_APP_API_ROOT}/posts`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      })
       .then((res) => {
         console.log("res", res);
       })
